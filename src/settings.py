@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -122,4 +123,5 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-ORS_API_KEY = 'eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjdiNTdjYTc2ODQ2OTQ5NmQ4ZmI1OTEwMWIwY2M2MzNlIiwiaCI6Im11cm11cjY0In0='
+ORS_API_KEY = os.getenv('ORS_API_KEY')
+GOOGLE_GEOCODE_API_KEY = os.getenv('GOOGLE_GEOCODE_API_KEY')
