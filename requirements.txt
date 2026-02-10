@@ -1,0 +1,9 @@
+Django>=5.0,<6.0
+djangorestframework
+psycopg2-binary  # Driver do Postgres
+requests         # Para chamar a API de rotas
+pandas           # Para ler o CSV rápido
+python-decouple  # (Opcional) Para gerenciar .env
+polyline         # Para decodificar a rota da API (Google/OSRM/ORS)
+openrouteservice
+geopy

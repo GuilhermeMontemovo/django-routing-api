@@ -1,0 +1,42 @@
+# docker-compose.yml
+services:
+  # Serviço de Banco de Dados Espacial
+  db:
+    image: postgis/postgis:16-3.4  # Postgres 16 com PostGIS 3.4
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "5432:5432"  # Exposto para você conectar via DBeaver/PgAdmin se quiser
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Serviço da API Django
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app  # Monta o diretório atual para Hot-Reloading funcionar
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=${SECRET_KEY}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=db
+      - DB_PORT=5432
+    depends_on:
+      db:
+        condition: service_healthy # Só inicia o Django quando o DB estiver pronto
+
+volumes:
+  postgres_data:
