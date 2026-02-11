@@ -1,12 +1,12 @@
 # Dockerfile
 FROM python:3.12-slim
 
-# Define variáveis de ambiente para o Python não bufferizar logs
+# Prevent Python from buffering stdout/stderr
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# Instala dependências do sistema necessárias para GeoDjango (GDAL, GEOS, PROJ)
-# "netcat-openbsd" é útil para scripts de wait-for-db
+# Install system dependencies required for GeoDjango (GDAL, GEOS, PROJ)
+# "netcat-openbsd" is useful for wait-for-db scripts
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        binutils \
@@ -18,18 +18,18 @@ RUN apt-get update \
        netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
 
-# Configura diretório de trabalho
+# Set working directory
 WORKDIR /app
 
-# Instala dependências Python
+# Install Python dependencies
 COPY requirements.txt /app/
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Copia o projeto
+# Copy project files
 COPY . /app/
 
-# Expose não publica a porta, é apenas documentação
+# Expose is documentation only (does not publish the port)
 EXPOSE 8000
 
-# Comando padrão (pode ser sobrescrito pelo docker-compose)
+# Default command (can be overridden by docker-compose)
 # CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

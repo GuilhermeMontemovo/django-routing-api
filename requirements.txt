@@ -7,3 +7,5 @@ python-decouple  # (Opcional) Para gerenciar .env
 polyline         # Para decodificar a rota da API (Google/OSRM/ORS)
 openrouteservice
 geopy
+aiohttp            # Geocode Google em paralelo (asyncio)
+django-silk        # Profiling de requests (SQL, tempo, cProfile)

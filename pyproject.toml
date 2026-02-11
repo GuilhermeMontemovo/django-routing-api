@@ -5,7 +5,10 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "aiohttp>=3.13.3",
     "django>=6.0.2",
+    "django-silk>=5.4.3",
+    "folium>=0.20.0",
     "geopy>=2.4.1",
     "openrouteservice>=2.3.3",
     "pandas>=3.0.0",
